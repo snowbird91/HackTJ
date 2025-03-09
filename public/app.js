@@ -700,23 +700,22 @@ function timerCompleted() {
     
     playCompletionSound();
     
-    if (currentTimerMode === 'focus') {
-        let minutesCompleted = 25;
-        
-        const activeBtn = document.querySelector('.mode-btn.active');
-        if (activeBtn) {
-            if (activeBtn.dataset.time === 'custom') {
-                const customValue = parseInt(customTimeInput?.value);
-                minutesCompleted = !isNaN(customValue) && customValue > 0 ? customValue : 1;
-                console.log(`Custom timer completed: ${minutesCompleted} minutes`);
-            } else {
-                minutesCompleted = parseInt(activeBtn.dataset.time) || 25;
-            }
+    let minutesCompleted = 25;
+    
+    const activeBtn = document.querySelector('.mode-btn.active');
+    if (activeBtn) {
+        if (activeBtn.dataset.time === 'custom') {
+            const customValue = parseInt(customTimeInput?.value);
+            minutesCompleted = !isNaN(customValue) && customValue > 0 ? customValue : 1;
+        } else {
+            minutesCompleted = parseInt(activeBtn.dataset.time) || 25;
         }
-        
-        userStats.focusMinutes = Number(userStats.focusMinutes || 0) + minutesCompleted;
-        console.log(`Added ${minutesCompleted} minutes. Total focus time: ${userStats.focusMinutes} minutes`);
-        
+    }
+    
+    userStats.focusMinutes = Number(userStats.focusMinutes || 0) + minutesCompleted;
+    console.log(`Added ${minutesCompleted} minutes. Total focus time: ${userStats.focusMinutes} minutes`);
+    
+    if (currentTimerMode === 'focus') {
         awardXP(minutesCompleted);
         
         let focusSessions = parseInt(getCookie('focusSessions') || '0');
@@ -740,6 +739,8 @@ function timerCompleted() {
             breakBtn.click();
         }
     } else {
+        awardXP(Math.floor(minutesCompleted / 2));
+        
         showNotification('Break completed! Ready to focus again?', 'info', 5000);
         
         const focusBtn = document.querySelector('.mode-btn[data-time="25"]');
