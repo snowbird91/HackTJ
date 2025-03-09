@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-const OPENAI_API_KEY = "REPLACE";
+const OPENAI_API_KEY = "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";
 
 function getElement(id) {
     const element = document.getElementById(id);
@@ -63,6 +63,12 @@ const saveEditTaskBtn = getElement('save-edit-task');
 const cancelEditTaskBtn = getElement('cancel-edit-task');
 let currentEditingTaskId = null;
 
+const darkModeToggle = document.createElement('button');
+darkModeToggle.id = 'dark-mode-toggle';
+darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+darkModeToggle.title = 'Toggle Dark Mode';
+document.body.appendChild(darkModeToggle);
+
 let tasks = [];
 let currentFilter = 'all';
 let currentCategoryFilter = 'all';
@@ -81,7 +87,9 @@ let achievements = initializeAchievements();
 let timerInterval = null;
 let timerRunning = false;
 let timerTime = 25 * 60;
+let timerInitialTime = timerTime;
 let currentTimerMode = 'focus';
+
 
 try {
     initializeApp();
@@ -253,6 +261,7 @@ function deleteCookie(name) {
 
 function initializeApp() {
     loadDataFromCookies();
+    loadDarkModeSetting();
     renderTasks();
     updateUserDisplay();
     renderAchievements();
@@ -1159,5 +1168,32 @@ function addTaskStyles() {
         document.head.appendChild(styleEl);
     }
 }
+
+function loadDarkModeSetting() {
+    const darkModeSetting = getCookie('darkMode');
+    if (darkModeSetting !== null) {
+        applyDarkMode(darkModeSetting);
+    }
+}
+
+function applyDarkMode(isDark) {
+    if (isDark) {
+        document.body.classList.add('dark-mode');
+        darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    } else {
+        document.body.classList.remove('dark-mode');
+        darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+    }
+}
+
+darkModeToggle.addEventListener('click', () => {
+    const isDark = document.body.classList.toggle('dark-mode');
+    if (isDark) {
+        darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    } else {
+        darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+    }
+    setCookie('darkMode', isDark);
+});
 
 });

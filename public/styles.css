@@ -16,6 +16,20 @@
     --category-personal: #f97316;
 }
 
+/* Dark mode variables */
+.dark-mode {
+    --primary-color: #818cf8;
+    --secondary-color: #6d63ff;
+    --background-color: #111827;
+    --card-color: #1f2937;
+    --text-color: #f3f4f6;
+    --completed-color: #34d399;
+    --border-color: #374151;
+    --low-priority: #60a5fa;
+    --medium-priority: #fbbf24;
+    --high-priority: #f87171;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -893,4 +907,173 @@ input[type="text"] {
 #cancel-edit-task {
     background-color: #f1f1f1;
     color: #333;
+}
+
+#dark-mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--card-color);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+#dark-mode-toggle:hover {
+    transform: scale(1.1);
+}
+
+.dark-mode .stat-card {
+    background-color: #2d3748;
+}
+
+.dark-mode .task-item:hover {
+    background-color: #2d3748;
+}
+
+.dark-mode .notification {
+    background-color: #2d3748;
+    color: var(--text-color);
+}
+
+.dark-mode .achievement {
+    background-color: #2d3748;
+}
+
+.dark-mode input[type="text"],
+.dark-mode textarea,
+.dark-mode #task-category,
+.dark-mode #edit-task-input,
+.dark-mode #custom-time-minutes {
+    background-color: #374151;
+    border-color: #4b5563;
+    color: var(--text-color);
+}
+
+.dark-mode input[type="text"]::placeholder,
+.dark-mode textarea::placeholder {
+    color: #9ca3af;
+}
+
+.dark-mode .mode-btn {
+    border-color: #4b5563;
+    color: #e5e7eb;
+}
+
+.dark-mode .mode-btn:hover:not(.active) {
+    background-color: #374151;
+}
+
+.dark-mode .timer-btn {
+    opacity: 0.9;
+}
+
+.dark-mode .timer-btn:hover {
+    opacity: 1;
+}
+
+.dark-mode .task-points {
+    background-color: #374151;
+    color: var(--text-color);
+}
+
+.dark-mode #edit-task-modal .modal-content {
+    background-color: var(--card-color);
+    color: var(--text-color);
+}
+
+.dark-mode #edit-task-modal h2 {
+    color: var(--text-color);
+}
+
+.dark-mode #cancel-edit-task {
+    background-color: #4b5563;
+    color: var(--text-color);
+}
+
+.dark-mode #cancel-edit-task:hover {
+    background-color: #6b7280;
+}
+
+.dark-mode .filter-btn,
+.dark-mode .category-filter-btn {
+    border-color: #4b5563;
+    color: #e5e7eb;
+}
+
+.dark-mode .filter-btn:hover:not(.active),
+.dark-mode .category-filter-btn:hover:not(.active) {
+    background-color: #374151;
+}
+
+.dark-mode .priority-btn {
+    border-color: #4b5563;
+    background-color: #2d3748;
+}
+
+.dark-mode .priority-btn[data-priority="low"] {
+    border-color: var(--low-priority);
+    color: var(--low-priority);
+}
+
+.dark-mode .priority-btn[data-priority="medium"] {
+    border-color: var(--medium-priority);
+    color: var(--medium-priority);
+}
+
+.dark-mode .priority-btn[data-priority="high"] {
+    border-color: var(--high-priority);
+    color: var(--high-priority);
+}
+
+.dark-mode .priority-btn.active[data-priority="low"],
+.dark-mode .priority-btn.active[data-priority="medium"],
+.dark-mode .priority-btn.active[data-priority="high"] {
+    color: white;
+}
+
+.dark-mode .modal-content {
+    background-color: var(--card-color);
+    color: var(--text-color);
+}
+
+.dark-mode .close-btn {
+    color: var(--text-color);
+}
+
+.dark-mode .reward-animation {
+    color: #fbbf24;
+}
+
+.dark-mode .task-focus {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 500;
+}
+
+.dark-mode .task-focus:hover {
+    background-color: var(--secondary-color);
+}
+
+.dark-mode .btn-primary,
+.dark-mode #save-edit-task,
+.dark-mode #confirm-reset-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.dark-mode .btn-secondary,
+.dark-mode #cancel-reset-btn {
+    background-color: #4b5563;
+    color: white;
 }
