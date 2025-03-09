@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questify - Gamified Task Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-dragon"></i> Questify</h1>
+            <div class="user-profile">
+                <div class="streak-counter"><i class="fas fa-fire"></i> <span id="streak-days">0</span> Days</div>
+                <div class="level-badge">Level <span id="user-level">1</span></div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="xp-progress"></div>
+                </div>
+                <div class="xp-counter"><span id="current-xp">0</span>/<span id="xp-needed">100</span> XP</div>
+            </div>
+        </header>
+
+        <main>
+            <section class="dashboard">
+                <h2>Your Dashboard</h2>
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-tasks"></i>
+                        <h3>Tasks Completed</h3>
+                        <p id="stats-completed">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-award"></i>
+                        <h3>Achievements</h3>
+                        <p id="stats-achievements">0/8</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-hourglass-half"></i>
+                        <h3>Focus Time</h3>
+                        <p id="stats-focus-time">0 mins</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-star"></i>
+                        <h3>Highest Streak</h3>
+                        <p id="stats-highest-streak">0 days</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="pomodoro">
+                <h2>Pomodoro Timer</h2>
+                <div class="pomodoro-container">
+                    <div class="timer-display">
+                        <span id="minutes">25</span>:<span id="seconds">00</span>
+                    </div>
+                    <div id="session-label">Work Session</div>
+                    <div class="timer-controls">
+                        <button id="start-timer" class="timer-btn"><i class="fas fa-play"></i> Start</button>
+                        <button id="pause-timer" class="timer-btn" disabled><i class="fas fa-pause"></i> Pause</button>
+                        <button id="reset-timer" class="timer-btn"><i class="fas fa-redo"></i> Reset</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="task-creation">
+                <h2>Create New Task</h2>
+                <div class="input-group">
+                    <input type="text" id="task-input" placeholder="Enter your task...">
+                    <button id="add-task" class="btn">Add Task</button>
+                    <button id="ai-suggest" class="btn ai-btn"><i class="fas fa-robot"></i> AI Suggest</button>
+                </div>
+                <div class="task-options">
+                    <div class="category-selector">
+                        <label for="task-category">Category:</label>
+                        <select id="task-category">
+                            <option value="general">General</option>
+                            <option value="work">Work</option>
+                            <option value="study">Study</option>
+                            <option value="health">Health</option>
+                            <option value="personal">Personal</option>
+                        </select>
+                    </div>
+                    <div class="priority-selector">
+                        <label>Priority:</label>
+                        <div class="priority-options">
+                            <button class="priority-btn" data-priority="low">Low</button>
+                            <button class="priority-btn active" data-priority="medium">Medium</button>
+                            <button class="priority-btn" data-priority="high">High</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="ai-prompt-container">
+                    <textarea id="ai-prompt"
+                        placeholder="Describe what kind of task suggestions you want (e.g., 'health tasks' or 'study tasks for math final')"></textarea>
+                    <button id="custom-ai-suggest" class="btn ai-btn"><i class="fas fa-magic"></i> Generate Custom
+                        Tasks</button>
+                </div>
+            </section>
+
+            <section class="tasks-container">
+                <div class="tasks-header">
+                    <h2>Your Quests</h2>
+                    <div class="filter-options">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="active">Active</button>
+                        <button class="filter-btn" data-filter="completed">Completed</button>
+                    </div>
+                </div>
+
+                <div class="category-filters">
+                    <button class="category-filter-btn active" data-category="all">All Categories</button>
+                    <button class="category-filter-btn" data-category="general">General</button>
+                    <button class="category-filter-btn" data-category="work">Work</button>
+                    <button class="category-filter-btn" data-category="study">Study</button>
+                    <button class="category-filter-btn" data-category="health">Health</button>
+                    <button class="category-filter-btn" data-category="personal">Personal</button>
+                </div>
+
+                <div id="tasks-list">
+                </div>
+            </section>
+
+            <section class="achievements">
+                <h2>Achievements</h2>
+                <div class="achievements-grid" id="achievements-container">
+                </div>
+            </section>
+        </main>
+
+        <div id="notification-container"></div>
+
+        <div class="modal" id="reward-modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <div class="reward-animation">
+                    <i class="fas fa-award"></i>
+                </div>
+                <h2>Level Up!</h2>
+                <p>Congratulations! You've reached Level <span id="new-level">2</span></p>
+                <div class="reward-details">
+                    <p>New achievement unlocked: <span id="new-achievement">Task Master</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="ai-loading-modal">
+            <div class="modal-content">
+                <div class="ai-loading-animation">
+                    <i class="fas fa-robot fa-bounce"></i>
+                    <p>AI is generating suggestions...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="reset-account-container">
+            <button id="reset-account-btn" class="btn reset-btn">Reset Account Progress</button>
+        </div>
+
+        <div class="modal" id="reset-confirm-modal">
+            <div class="modal-content">
+                <span class="close-btn" id="close-reset-modal">&times;</span>
+                <h2>Reset Account</h2>
+                <p>Are you sure you want to reset all your progress? This cannot be undone.</p>
+                <div class="reset-actions">
+                    <button id="confirm-reset-btn" class="btn reset-btn">Yes, Reset Everything</button>
+                    <button id="cancel-reset-btn" class="btn">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
